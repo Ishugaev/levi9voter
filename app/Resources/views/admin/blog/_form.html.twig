@@ -9,7 +9,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <input type="submit" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
+    <input type="submi;t" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
            class="{{ button_css|default("btn btn-primary") }}" />
 
     {% if is_granted('publish', post) %}
@@ -28,37 +28,39 @@
 
 {{ form_end(form) }}
 
-<input type="file" name="upload[file]" id="upload_file" accept="image/*" class="hidden"/>
+<input type="file" name="upload[file]" id="upload_file" accept="image/*" class="hidden" data-url="{{ path('image_upload') }}"/>
 
 <script>
-    document.querySelector('#upload_file').addEventListener('change', function(e) {
-        var formData = new FormData();
-        formData.append("upload[file]", this.files[0]);
-        this.value = null;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', "{{ path('image_upload') }}", true);
-
-        xhr.onload = function() {
-            if (this.status == 200) {
-                var response = JSON.parse(this.response);
-                var image = response.image;
-                $('.mce-btn.mce-open').parent().find('.mce-textbox').val(image).closest('.mce-window').find('.mce-primary').click();
-            } else {
-                alert('File has not been uploaded');
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
             }
-        };
+        });
+    });
 
-        xhr.send(formData);
-    }, false);
+    {#document.querySelector('#upload_file').addEventListener('change', function(e) {#}
+        {#var formData = new FormData();#}
+        {#formData.append("upload[file]", this.files[0]);#}
+        {#this.value = null;#}
 
-    function callback_tinymce_init(editor) {
-        editor.settings.file_browser_callback = function(field_name, url, type, win) {
-            if (type == 'image') {
-                $('#upload_file').click();
-            }
-        }
-    }
+        {#var xhr = new XMLHttpRequest();#}
+        {#xhr.open('POST', "{{ path('image_upload') }}", true);#}
+
+        {#xhr.onload = function() {#}
+            {#if (this.status == 200) {#}
+                {#var response = JSON.parse(this.response);#}
+                {#$('<input>').attr({type: 'hidden', name: 'images[]', val: response.id}).appendTo('form');#}
+            {#} else {#}
+                {#alert('File has not been uploaded');#}
+            {#}#}
+        {#};#}
+
+        {#xhr.send(formData);#}
+    {#}, false);#}
 </script>
 
 {{ tinymce_init() }}

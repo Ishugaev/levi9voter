@@ -32,21 +32,27 @@ class Image
      *     mimeTypesMessage = "Only the filetypes image are allowed."
      * )
      */
-    protected $file;
+    private $file;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", length=255, nullable=false)
      */
-    protected $path;
+    private $path;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", length=255, nullable=false)
      */
-    protected $name;
+    private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="images")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $post;
 
     /**
      * @return mixed
@@ -102,6 +108,25 @@ class Image
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param Post|null $post
+     * @return $this
+     */
+    public function setPost(Post $post = null)
+    {
+        $this->post = $post;
+
+        return $this;
     }
 
     /**

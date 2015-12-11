@@ -19,6 +19,7 @@
 
             <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         {% endblock %}
+        <script src="{{ asset('js/app.js') }}"></script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 
@@ -179,7 +180,9 @@
             {% endjavascripts %}
         #}
 
-            <script src="{{ asset('js/app.js') }}"></script>
+            {% javascripts '@blueimp' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
 
             <script>
                 $(document).ready(function() {

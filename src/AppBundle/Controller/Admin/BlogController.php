@@ -178,6 +178,7 @@ class BlogController extends Controller
      * @Security("has_role('ROLE_USER')")
      *
      * @param Post $post
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
