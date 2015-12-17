@@ -1,7 +1,28 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <input type="submi;t" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
+ <input type="button" id="select_file" value="Upload Image"
+           class="{{ button_css|default("btn btn-primary") }}">
+
+    <br>
+    <br>
+
+    <table role="presentation" class="table table-striped hidden" id="files">
+        <tbody class="files">
+            <tr class="template-upload">
+                <td class="col-xs-3">
+                    <div class="preview"></div>
+                </td>
+                <td class="col-xs-9">
+                    <p class="name" id="file_name"></p>
+                    <div id="progress" class="progress progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                    <p><a href="javascript:;">Remove</a></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="submit" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
            class="{{ button_css|default("btn btn-primary") }}" />
 
     {% if is_granted('publish', post) %}
@@ -22,37 +43,45 @@
 
 <input type="file" name="upload[file]" id="upload_file" accept="image/*" class="hidden" data-url="{{ path('image_upload') }}"/>
 
-<script>
-    $(function () {
-        $('#fileupload').fileupload({
-            dataType: 'json',
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<p/>').text(file.name).appendTo(document.body);
-                });
-            }
+{% block javascripts %}
+    <script src="{{ asset('js/vendor/jquery.ui.widget.js') }}"></script>
+    <script src="{{ asset('js/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('js/jquery.iframe-transport.js') }}"></script>
+    <script>
+        $(function () {
+            $('#select_file').click(function(){
+                $('#upload_file').click();
+            });
+            $('#upload_file').fileupload({
+                dataType: 'json',
+                singleFileUploads: false,
+                limitMultiFileUploads: 1,
+                maxNumberOfFiles: 1,
+                autoUpload: true,
+                add: function (e, data) {
+                    $('#files').toggleClass('hidden');
+                    data.submit();
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                            'width',
+                            progress + '%'
+                    );
+                },
+                done: function (e, data) {
+                    $('#select_file').attr({disabled: true});
+                    $('#file_name').text(data.result.name);
+                    $('<img/>').attr({
+                        src: data.result.url,
+                        title: data.result.name,
+                        class: "thumbnail",
+                        style: "width: 100%; min-width: 100px; max-width: 200px"
+                    }).appendTo('.preview');
+                }
+            });
         });
-    });
+    </script>
 
-    {#document.querySelector('#upload_file').addEventListener('change', function(e) {#}
-        {#var formData = new FormData();#}
-        {#formData.append("upload[file]", this.files[0]);#}
-        {#this.value = null;#}
-
-        {#var xhr = new XMLHttpRequest();#}
-        {#xhr.open('POST', "{{ path('image_upload') }}", true);#}
-
-        {#xhr.onload = function() {#}
-            {#if (this.status == 200) {#}
-                {#var response = JSON.parse(this.response);#}
-                {#$('<input>').attr({type: 'hidden', name: 'images[]', val: response.id}).appendTo('form');#}
-            {#} else {#}
-                {#alert('File has not been uploaded');#}
-            {#}#}
-        {#};#}
-
-        {#xhr.send(formData);#}
-    {#}, false);#}
-</script>
-
-{{ tinymce_init() }}
+    {{ tinymce_init() }}
+{% endblock %}

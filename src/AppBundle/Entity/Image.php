@@ -55,6 +55,12 @@ class Image
     private $post;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="images")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -120,11 +126,32 @@ class Image
 
     /**
      * @param Post|null $post
+     *
      * @return $this
      */
-    public function setPost(Post $post = null)
+    public function setPost(Post $post)
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
 
         return $this;
     }
