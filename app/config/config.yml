@@ -65,6 +65,25 @@ assetic:
         scssphp:
             # the formatter must be the FQCN (don't use the 'compressed' value)
             formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+    assets:
+        bootstrap_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/npm.js
+            output: "js/bootstrap.js"
+        blueimp:
+            inputs:
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/cors/jquery.postmessage-transport.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/cors/jquery.xdr-transport.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/vendor/jquery.ui.widget.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.fileupload-jquery-ui.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.fileupload-process.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.fileupload-ui.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.fileupload-validate.js
+                - %kernel.root_dir%/../vendor/blueimp/jquery-file-upload/js/jquery.iframe-transport.js
+            output: "js/blueimp.js"
+
 
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:
@@ -106,7 +125,5 @@ stfalcon_tinymce:
                  - "searchreplace wordcount visualblocks visualchars code fullscreen"
                  - "media nonbreaking save table contextmenu directionality"
                  - "template paste textcolor"
-             toolbar1: "styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-             toolbar2: "preview media"
+             toolbar1: "styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | preview media"
              image_advtab: true
-    use_callback_tinymce_init: true

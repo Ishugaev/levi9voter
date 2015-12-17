@@ -25,7 +25,8 @@ class PostVoter extends AbstractVoter
     protected function getSupportedClasses()
     {
         return [
-            Post::class
+            'AppBundle\Entity\Post'
+//            Post::class
         ];
     }
 

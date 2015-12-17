@@ -124,6 +124,17 @@ class Post
     private $votes;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Image",
+     *      mappedBy="post",
+     *      orphanRemoval=true
+     * )
+     */
+    private $images;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer", options={"default" = 0})
@@ -349,6 +360,40 @@ class Post
     {
         $this->votes->removeElement($vote);
         $vote->setPost(null);
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param Image $image
+     *
+     * @return $this
+     */
+    public function addImage(Image $image)
+    {
+        $this->images->add($image);
+        $image->setPost($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Image $image
+     *
+     * @return $this
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+        $image->setPost(null);
 
         return $this;
     }
