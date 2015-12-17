@@ -16,7 +16,7 @@
                 <td class="col-xs-9">
                     <p class="name" id="file_name"></p>
                     <div id="progress" class="progress progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-                    <p><a href="javascript:;" id="remove_file">Remove</a></p>
+                    <p><a href="" id="remove_file">Remove</a></p>
                 </td>
             </tr>
         </tbody>
@@ -54,15 +54,16 @@
             $('#select_file').click(function(){
                 $('#upload_file').click();
             });
-            $('#remove_file').click(function(){
+
+            $('#remove_file').click(function(e){
+                debugger;
+                e.preventDefault();
                 $.ajax({
-                    url: '/remove/' + $('#file_id').val() + '/image',
-                    type: 'GET',
-                    success: function(response) {
-                        alert('etst');
-                    }
+                    url: $(this).attr('href'),
+                    method: "DELETE"
                 });
             });
+
             $('#upload_file').fileupload({
                 dataType: 'json',
                 singleFileUploads: false,
@@ -84,6 +85,7 @@
                     $('#select_file').attr({disabled: true});
                     $('#file_name').text(data.result.name);
                     $('#file_id').val(data.result.id);
+                    $('#remove_file').attr('href', data.result.deleteUrl);
                     $('<img/>').attr({
                         src: data.result.url,
                         title: data.result.name,

@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -46,6 +46,7 @@ class UploadController extends Controller
             return new JsonResponse(array(
                 'id' => $image->getId(),
                 'url' => $image->getWebPath(),
+                'deleteUrl' => $this->generateUrl('image_remove', ['id' => $image->getId()]),
                 'name' => $image->getName(),
             ));
         }
@@ -54,19 +55,20 @@ class UploadController extends Controller
     }
 
     /**
-     * @Route("remove/image/{id}", name="image_remove")
+     * @Route("/image/{id}", name="image_remove")
      * @Method("DELETE")
      * @Security("has_role('ROLE_USER')")
      *
-     * @ParamConverter("image", options={"mapping": {"image": "id"}})
+     * @ParamConverter("post", class="AppBundle:Image")
      */
-    public function removeImageAction(Request $request, Image $image)
+    public function removeImageAction(Image $image)
     {
-        dump($image); die();
         if ($image && $image->getUser()->getId() == $this->getUser()->getId()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($image);
             $em->flush();
+
+            return new JsonResponse([]);
         } else {
             throw new BadRequestHttpException();
         }
