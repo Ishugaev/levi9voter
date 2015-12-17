@@ -244,6 +244,79 @@
                 <source>flash.vote.published</source>
                 <target>Голосування опубліковано</target>
             </trans-unit>
+            <trans-unit id="flash.vote.approved">
+                <source>flash.vote.approved</source>
+                <target>Прийнято</target>
+            </trans-unit>
+            <trans-unit id="flash.vote.rejected">
+                <source>flash.vote.rejected</source>
+                <target>Відхилено</target>
+            </trans-unit>
+
+            <trans-unit id="post.state.1">
+                <source>post.state.1</source>
+                <target>Розглядається</target>
+            </trans-unit>
+            <trans-unit id="post.state.2">
+                <source>post.state.2</source>
+                <target>В процесі голосування</target>
+            </trans-unit>
+            <trans-unit id="post.state.3">
+                <source>post.state.3</source>
+                <target>Прийнято</target>
+            </trans-unit>
+            <trans-unit id="post.state.4">
+                <source>post.state.4</source>
+                <target>Відхилено</target>
+            </trans-unit>
+
+            <trans-unit id="post.voting.0">
+                <source>post.voting.0</source>
+                <target>Кращий рейтінг</target>
+            </trans-unit>
+            <trans-unit id="post.voting.1">
+                <source>post.voting.1</source>
+                <target>Найпопулярніше</target>
+            </trans-unit>
+
+            <trans-unit id="post.voting.filter.title">
+                <source>post.voting.filter.title</source>
+                <target>Фільтр голосування:</target>
+            </trans-unit>
+            <trans-unit id="post.category.filter.title">
+                <source>post.category.filter.title</source>
+                <target>Фільтрувати за катигорією:</target>
+            </trans-unit>
+            <trans-unit id="post.category.filter.all.title">
+                <source>post.category.filter.all.title</source>
+                <target>Показати все</target>
+            </trans-unit>
+            <trans-unit id="post.state.filter.title">
+                <source>post.state.filter.title</source>
+                <target>Фільтрувати за статусом:</target>
+            </trans-unit>
+            <trans-unit id="post.state.filter.all.title">
+                <source>post.state.filter.all.title</source>
+                <target>Показати все</target>
+            </trans-unit>
+
+            <trans-unit id="action.delete_comment">
+                <source>action.delete_comment</source>
+                <target>Видалити коментар</target>
+            </trans-unit>
+            <trans-unit id="flash.comment.deleted">
+                <source>flash.comment.deleted</source>
+                <target>Коментар було видалено</target>
+            </trans-unit>
+
+            <trans-unit id="action.approve">
+                <source>action.approve</source>
+                <target>Прийняти</target>
+            </trans-unit>
+            <trans-unit id="action.reject">
+                <source>action.reject</source>
+                <target>Відхилити</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

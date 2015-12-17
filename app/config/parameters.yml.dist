@@ -55,6 +55,7 @@ parameters:
         #- m.labinskyi@levi9.com
         #- a.pirog@levi9.com
         - i.shugaiev@levi9.com
+        - m.bova@levi9.com
 
     riper.security.active_directory.settings:
         account_suffix : levi9.com # without the @ at the beginning

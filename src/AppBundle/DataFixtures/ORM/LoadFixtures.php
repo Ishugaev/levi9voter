@@ -88,11 +88,12 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
         $manager->persist($user);
         $manager->flush();
 
+        /** @var User $author */
         $author = $manager->getRepository('AppBundle:User')->findOneBy([
             'email' => 'fakeuser2@levi9.com'
         ]);
 
-        foreach (range(1, 5) as $i) {
+        foreach (range(1, 10) as $i) {
             $post = new Post();
 
             $post
