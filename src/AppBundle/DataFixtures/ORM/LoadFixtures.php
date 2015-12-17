@@ -96,7 +96,7 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
             $post = new Post();
 
             $post
-                ->setTitle($this->getRandomPostTitle())
+                ->setTitle($this->getRandomPostTitle() . ' ' . uniqid())
                 ->setSummary($this->getRandomPostSummary())
                 ->setSlug($this->container->get('slugger')->slugify($post->getTitle()))
                 ->setContent($this->getPostContent())

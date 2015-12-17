@@ -14,6 +14,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Enum\FlashbagTypeEnum;
 use AppBundle\Event\PostEvent;
 use AppBundle\Form\PostType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -103,11 +104,15 @@ class BlogController extends Controller
             $post->setPublishedAt(new \DateTime());
             $this->changePostState($request, $post);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($post);
+                $em->flush();
 
-            return $this->redirectToRoute('admin_post_index');
+                return $this->redirectToRoute('admin_post_index');
+            } catch (UniqueConstraintViolationException $e ) {
+                $this->addFlash(FlashbagTypeEnum::ERROR, $this->getTranslator()->trans('flash.vote.error.slug.duplicate'));
+            }
         }
 
         return $this->render('admin/blog/new.html.twig', array(

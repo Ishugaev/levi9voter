@@ -328,6 +328,18 @@
                 <source>flash.vote.not-agree</source>
                 <target>You voted against this proposal!</target>
             </trans-unit>
+            <trans-unit id="flash.vote.error.slug.duplicate">
+                <source>flash.vote.error.slug.duplicate</source>
+                <target>Vote with this title is already exists. Please use unique title</target>
+            </trans-unit>
+            <trans-unit id="admin.votes.list.title">
+                <source>admin.votes.list.title</source>
+                <target>Admin panel</target>
+            </trans-unit>
+            <trans-unit id="votes.list.title">
+                <source>votes.list.title</source>
+                <target>Site</target>
+            </trans-unit>
             <trans-unit id="action.edit_comment">
                 <source>action.edit_comment</source>
                 <target>Edit</target>

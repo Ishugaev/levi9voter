@@ -132,7 +132,7 @@
             </trans-unit>
             <trans-unit id="action.create_post">
                 <source>action.create_post</source>
-                <target>Создать новую запись</target>
+                <target>Создать запись</target>
             </trans-unit>
             <trans-unit id="label.create_post">
                 <source>label.create_post</source>
@@ -141,6 +141,10 @@
             <trans-unit id="label.publish_post">
                 <source>label.publish_post</source>
                 <target>Опубликовать</target>
+            </trans-unit>
+            <trans-unit id="label.review_post">
+                <source>label.review_post</source>
+                <target>Отправить на рассмотрение</target>
             </trans-unit>
             <trans-unit id="action.back_to_list">
                 <source>action.back_to_list</source>
@@ -176,7 +180,7 @@
             </trans-unit>
             <trans-unit id="label.title">
                 <source>label.title</source>
-                <target>Название</target>
+                <target>Заголовок</target>
             </trans-unit>
             <trans-unit id="label.category">
                 <source>label.category</source>
@@ -324,6 +328,10 @@
             <trans-unit id="flash.vote.rejected">
                 <source>flash.vote.rejected</source>
                 <target>Предложение отклонено</target>
+            </trans-unit>
+            <trans-unit id="flash.vote.error.slug.duplicate">
+                <source>flash.vote.error.slug.duplicate</source>
+                <target>Голосование с таким заголовком уже существует! Используйте уникальный заголовок</target>
             </trans-unit>
             <trans-unit id="flash.vote.published">
                 <source>flash.vote.published</source>
