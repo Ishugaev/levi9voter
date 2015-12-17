@@ -1,8 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
- <input type="button" id="select_file" value="Upload Image"
-           class="{{ button_css|default("btn btn-primary") }}">
+     <input type="button" id="select_file" value="Upload Image"
+               class="{{ button_css|default("btn btn-primary") }}">
 
     <br>
     <br>
@@ -16,7 +16,7 @@
                 <td class="col-xs-9">
                     <p class="name" id="file_name"></p>
                     <div id="progress" class="progress progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-                    <p><a href="javascript:;">Remove</a></p>
+                    <p><a href="javascript:;" id="remove_file">Remove</a></p>
                 </td>
             </tr>
         </tbody>
@@ -24,6 +24,8 @@
 
     <input type="submit" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
            class="{{ button_css|default("btn btn-primary") }}" />
+
+    <input type="hidden" name="fileid" id="file_id">
 
     {% if is_granted('publish', post) %}
             <input type="submit" name="publish" value="{{ 'label.publish_post'|trans }}"
@@ -52,6 +54,15 @@
             $('#select_file').click(function(){
                 $('#upload_file').click();
             });
+            $('#remove_file').click(function(){
+                $.ajax({
+                    url: '/remove/' + $('#file_id').val() + '/image',
+                    type: 'GET',
+                    success: function(response) {
+                        alert('etst');
+                    }
+                });
+            });
             $('#upload_file').fileupload({
                 dataType: 'json',
                 singleFileUploads: false,
@@ -72,6 +83,7 @@
                 done: function (e, data) {
                     $('#select_file').attr({disabled: true});
                     $('#file_name').text(data.result.name);
+                    $('#file_id').val(data.result.id);
                     $('<img/>').attr({
                         src: data.result.url,
                         title: data.result.name,
