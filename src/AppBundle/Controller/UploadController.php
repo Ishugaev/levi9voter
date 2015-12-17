@@ -33,11 +33,11 @@ class UploadController extends Controller
         if ($form->isValid()) {
             /** @var Image $image */
             $image = $form->getData();
+
+            //todo: refactor following code
             $repository = $this->getDoctrine()->getRepository('AppBundle:User');
             $user = $repository->findOneBy(['id' => $this->getUser()->getId()]);
-
             $image->setUser($user);
-
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);

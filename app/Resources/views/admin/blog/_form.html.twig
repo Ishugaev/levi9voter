@@ -1,8 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
- <input type="button" id="select_file" value="Upload Image"
-           class="{{ button_css|default("btn btn-primary") }}">
+     <input type="button" id="select_file" value="Upload Image"
+               class="{{ button_css|default("btn btn-primary") }}">
 
     <br>
     <br>
@@ -24,6 +24,8 @@
 
     <input type="submit" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
            class="{{ button_css|default("btn btn-primary") }}" />
+
+    <input type="hidden" name="fileid" id="file_id">
 
     {% if is_granted('publish', post) %}
             <input type="submit" name="publish" value="{{ 'label.publish_post'|trans }}"
@@ -82,6 +84,7 @@
                 done: function (e, data) {
                     $('#select_file').attr({disabled: true});
                     $('#file_name').text(data.result.name);
+                    $('#file_id').val(data.result.id);
                     $('#remove_file').attr('href', data.result.deleteUrl);
                     $('<img/>').attr({
                         src: data.result.url,
