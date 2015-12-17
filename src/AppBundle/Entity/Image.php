@@ -55,7 +55,7 @@ class Image
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
