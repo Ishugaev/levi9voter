@@ -11,7 +11,7 @@
         <tbody class="files">
             <tr class="template-upload">
                 <td class="col-xs-3">
-                    <div class="preview"></div>
+                    <div id="preview"></div>
                 </td>
                 <td class="col-xs-9">
                     <p class="name" id="file_name"></p>
@@ -51,20 +51,26 @@
     <script src="{{ asset('js/jquery.iframe-transport.js') }}"></script>
     <script>
         $(function () {
-            $('#select_file').click(function(){
+            $('#select_file').click(function() {
                 $('#upload_file').click();
             });
 
-            $('#remove_file').click(function(e){
+            $('#remove_file').click(function(e) {
                 debugger;
                 e.preventDefault();
                 $.ajax({
                     url: $(this).attr('href'),
                     method: "DELETE"
+                }).done(function() {
+                    $('#files').toggleClass('hidden');
+                    $('#file_id').val(null);
+                    alert($('#file_id').val(null));
+                    $('#preview > img').remove();
+                    $('#select_file').attr({disabled: false});
                 });
             });
 
-            $('#upload_file').fileupload({
+            $('#upload_file').fileupload( {
                 dataType: 'json',
                 singleFileUploads: false,
                 limitMultiFileUploads: 1,
@@ -76,10 +82,7 @@
                 },
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .progress-bar').css(
-                            'width',
-                            progress + '%'
-                    );
+                    $('#progress .progress-bar').css('width', progress + '%');
                 },
                 done: function (e, data) {
                     $('#select_file').attr({disabled: true});
@@ -91,7 +94,7 @@
                         title: data.result.name,
                         class: "thumbnail",
                         style: "width: 100%; min-width: 100px; max-width: 200px"
-                    }).appendTo('.preview');
+                    }).appendTo('#preview');
                 }
             });
         });
