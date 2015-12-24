@@ -146,6 +146,7 @@ class Post
         $this->publishedAt = new \DateTime();
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**

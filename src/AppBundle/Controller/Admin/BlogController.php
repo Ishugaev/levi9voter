@@ -102,6 +102,7 @@ class BlogController extends Controller
             $post->setAuthor($user);
             $post->setSlug($this->get('slugger')->slugify($post->getTitle()));
             $post->setPublishedAt(new \DateTime());
+            $this->attachImage($request, $post);
             $this->changePostState($request, $post);
 
             try {
@@ -111,7 +112,10 @@ class BlogController extends Controller
 
                 return $this->redirectToRoute('admin_post_index');
             } catch (UniqueConstraintViolationException $e ) {
-                $this->addFlash(FlashbagTypeEnum::ERROR, $this->getTranslator()->trans('flash.vote.error.slug.duplicate'));
+                $this->addFlash(
+                    FlashbagTypeEnum::ERROR,
+                    $this->getTranslator()->trans('flash.vote.error.slug.duplicate')
+                );
             }
         }
 
@@ -163,6 +167,7 @@ class BlogController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $post->setSlug($this->get('slugger')->slugify($post->getTitle()));
 
+            $this->attachImage($request, $post);
             $this->changePostState($request, $post);
 
             $em->flush();
@@ -301,6 +306,20 @@ class BlogController extends Controller
         }
 
         $this->onChangePostState($post);
+    }
+
+    /**
+     * @param Request $request
+     * @param Post $post
+     */
+    private function attachImage(Request $request, Post $post)
+    {
+        if ($id = $request->request->get('fileid')) {
+            $em = $this->getDoctrine()->getManager();
+            if ($image = $em->getRepository('AppBundle:Image')->findOneBy(['id' => $id])) {
+                $post->addImage($image);
+            }
+        }
     }
 
     /**
