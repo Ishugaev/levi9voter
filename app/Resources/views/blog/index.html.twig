@@ -17,7 +17,10 @@
             <span class="label label-danger">
                 <i class="fa fa-thumbs-down"></i>({{ post.notAgreeCount }})
             </span>
-
+            {% set image = post.images.first %}
+            {% if image %}
+                <img src="{{ image.getWebPath }}" class="thumbnail upload" title="{{ image.name }}">
+            {% endif %}
             {{ post.summary|md2html }}
         </article>
     {% endfor %}
