@@ -1,22 +1,27 @@
+{% set image = post.images.first %}
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-     <input type="button" id="select_file" value="Upload Image"
-               class="{{ button_css|default("btn btn-primary") }}">
+     <input type="button" id="select_file" value="Upload Image" class="{{ button_css|default("btn btn-primary") }}"
+            {% if image %}disabled="true"{% endif %}>
 
     <br>
     <br>
 
-    <table role="presentation" class="table table-striped hidden" id="files">
+    <table role="presentation" class="table table-striped {% if not image %}hidden{% endif %}" id="files">
         <tbody class="files">
             <tr class="template-upload">
                 <td class="col-xs-3">
-                    <div class="preview"></div>
+                    <div id="preview">
+                        {% if image %}
+                            <img src="{{ image.getWebPath }}" class="thumbnail upload" title="{{ image.name }}">
+                        {% endif %}
+                    </div>
                 </td>
                 <td class="col-xs-9">
-                    <p class="name" id="file_name"></p>
-                    <div id="progress" class="progress progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-                    <p><a href="" id="remove_file">Remove</a></p>
+                    <p class="name" id="file_name">{% if image %}{{ image.name }}{% endif %}</p>
+                    <div id="progress" class="progress progress hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                    <p><a href="{% if image %}{{ path('image_remove', {'id': image.id}) }}{% endif %}" id="remove_file">Remove</a></p>
                 </td>
             </tr>
         </tbody>
@@ -25,7 +30,7 @@
     <input type="submit" name="save" value="{{ button_label|default('label.create_post'|trans) }}"
            class="{{ button_css|default("btn btn-primary") }}" />
 
-    <input type="hidden" name="fileid" id="file_id">
+    <input type="hidden" name="fileid" id="file_id" {% if image.id is defined %}value="{{ image.id }}"{% endif %}>
 
     {% if is_granted('publish', post) %}
             <input type="submit" name="publish" value="{{ 'label.publish_post'|trans }}"
@@ -51,16 +56,20 @@
     <script src="{{ asset('js/jquery.iframe-transport.js') }}"></script>
     <script>
         $(function () {
-            $('#select_file').click(function(){
+            $('#select_file').click(function() {
                 $('#upload_file').click();
             });
 
-            $('#remove_file').click(function(e){
-                debugger;
+            $('#remove_file').click(function(e) {
                 e.preventDefault();
                 $.ajax({
                     url: $(this).attr('href'),
                     method: "DELETE"
+                }).done(function() {
+                    $('#file_id').val(null);
+                    $('#files').toggleClass('hidden');
+                    $('#preview > img').remove();
+                    $('#select_file').attr({disabled: false});
                 });
             });
 
@@ -72,14 +81,12 @@
                 autoUpload: true,
                 add: function (e, data) {
                     $('#files').toggleClass('hidden');
+                    $('#progress').toggleClass('hidden');
                     data.submit();
                 },
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .progress-bar').css(
-                            'width',
-                            progress + '%'
-                    );
+                    $('#progress .progress-bar').css('width', progress + '%');
                 },
                 done: function (e, data) {
                     $('#select_file').attr({disabled: true});
@@ -89,9 +96,8 @@
                     $('<img/>').attr({
                         src: data.result.url,
                         title: data.result.name,
-                        class: "thumbnail",
-                        style: "width: 100%; min-width: 100px; max-width: 200px"
-                    }).appendTo('.preview');
+                        class: "thumbnail upload"
+                    }).appendTo('#preview');
                 }
             });
         });
