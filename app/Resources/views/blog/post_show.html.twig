@@ -8,7 +8,9 @@
         <span class="label label-{{ state_classes[post.state] }}">{{ ('post.state.'~post.state)|trans }}</span>
     </h1>
 
-    {{ post.content|raw }}
+    {% for image in post.images %}
+        <img src="{{ image.getWebPath }}" title="{{ image.name }}" />
+    {% endfor%}
 
     {% if is_granted('vote', post) %}
     <div id="post-add-comment" class="well">
