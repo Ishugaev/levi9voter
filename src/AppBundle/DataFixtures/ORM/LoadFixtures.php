@@ -72,9 +72,6 @@ class LoadFixtures implements FixtureInterface, ContainerAwareInterface
 
     private function loadPosts(ObjectManager $manager)
     {
-        $category = new Category();
-        $category->setName('Improvements');
-
         $passwordEncoder = $this->container->get('security.password_encoder');
 
         $user = new User();
