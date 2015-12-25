@@ -19,7 +19,7 @@
             </span>
             {% set image = post.images.first %}
             {% if image %}
-                <div ><img src="{{ image.getWebPath }}" class="thumbnail upload" title="{{ image.name }}"></div>
+                <img src="{{ image.getWebPath }}" class="thumbnail upload" title="{{ image.name }}">
             {% endif %}
             {{ post.summary|md2html }}
         </article>
