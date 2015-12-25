@@ -57,6 +57,15 @@ class User extends AdUser
     private $comments;
 
     /**
+     * @ORM\OneToMany(
+     *      targetEntity="Image",
+     *      mappedBy="user",
+     *      orphanRemoval=true
+     * )
+     */
+    private $images;
+
+    /**
      * @ORM\Column(type="json_array")
      */
     private $roles = array();

@@ -10,6 +10,17 @@
 
     <table class="table">
         <tbody>
+            {% if post.images|length %}
+            <tr>
+                <th>{{ 'label.image'|trans }}</th>
+                <td>
+                    {% for image in post.images %}
+                        <img src="{{ image.getWebPath }}" title="{{ image.name }}" class="thumbnail upload" />
+                        <br />
+                    {% endfor%}
+                </td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{{ 'label.summary'|trans }}</th>
                 <td>{{ post.summary|md2html }}</td>

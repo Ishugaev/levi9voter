@@ -22,10 +22,12 @@
         "symfony/assetic-bundle"               : "~2.6",
         "symfony/monolog-bundle"               : "~2.7",
         "symfony/swiftmailer-bundle"           : "~2.3",
-        "symfony/symfony"                      : "~2.7",
+        "symfony/symfony"                      : "2.7.*",
         "twig/extensions"                      : "~1.2",
         "riper/security-active_directory"      : "^1.0",
-        "stfalcon/tinymce-bundle": "dev-master"
+        "stfalcon/tinymce-bundle"              : "dev-master",
+        "twbs/bootstrap"                       : "^3.3",
+        "blueimp/jquery-file-upload"           : "^9.11"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

@@ -284,3 +284,13 @@ body#admin_post_index {
 // --------------------------------------------------
 body#admin_post_show {
 }
+
+.upload {
+    width: 100%;
+    min-width: 100px;
+    max-width: 250px;
+}
+
+.post .upload {
+    margin-top: 10.5px;
+}

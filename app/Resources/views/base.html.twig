@@ -19,6 +19,7 @@
 
             <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         {% endblock %}
+        <script src="{{ asset('js/app.js') }}"></script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 
@@ -178,8 +179,6 @@
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         #}
-
-            <script src="{{ asset('js/app.js') }}"></script>
 
             <script>
                 $(document).ready(function() {
